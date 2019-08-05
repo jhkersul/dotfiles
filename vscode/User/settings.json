@@ -1,0 +1,21 @@
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.fontSize": 14,
+    "workbench.colorTheme": "One Dark Pro",
+    "git.autofetch": true,
+    "editor.tabSize": 2,
+    "workbench.editor.enablePreview": false,
+    "git.confirmSync": false,
+    "window.zoomLevel": 0,
+    "window.title": "${activeEditorMedium}${separator}${rootName}",
+    "workbench.editor.labelFormat": "medium",
+    "python.jediEnabled": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.lineNumbers": "relative",
+    "search.location": "panel",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "breadcrumbs.enabled": true
+}
