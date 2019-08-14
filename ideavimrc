@@ -1,0 +1,16 @@
+" Setting <leader>
+let mapleader = ','
+
+" IDEA Actions
+nnoremap <leader>f :action FindInPath<cr>
+nnoremap <leader>t :action SearchEverywhere<cr>
+nnoremap <leader>gi :action GotoImplementation<cr>
+nnoremap <leader>gt :action GotoTest<cr>
+nnoremap <leader>su :action ShowUsages<cr>
+nnoremap <leader>r :action Run<cr>
+nnoremap <leader>d :action Debug<cr>
+nnoremap ]e :action GotoNextError<cr>
+nnoremap [e :action GotoPreviousError<cr>
+
+" Turn relative line numbers on
+set relativenumber
