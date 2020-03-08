@@ -2,9 +2,7 @@
 ZSH_THEME="robbyrussell"
 
 # Zsh Plugins
-plugins=(
-  git
-)
+plugins=(git vi-mode docker history-substring-search)
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit

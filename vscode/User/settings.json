@@ -10,8 +10,10 @@
   "editor.lineNumbers": "relative",
   "git.confirmSync": false,
   "git.autofetch": true,
-  "editor.formatOnSave": true,
   "python.jediEnabled": false,
   "workbench.colorCustomizations": {},
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  }
 }
