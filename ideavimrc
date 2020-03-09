@@ -20,3 +20,7 @@ nnoremap <C-H> <C-W><C-H>
 
 " Turn relative line numbers on
 set relativenumber
+
+" KJump
+nnoremap <leader>w :action KJumpAction.Word0<cr>
+
