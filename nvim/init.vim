@@ -11,6 +11,9 @@ let g:mapleader=','
 " Disable line numbers
 set nonumber
 
+" turn relative line numbers on
+set relativenumber
+
 " Don't show last command
 set noshowcmd
 
