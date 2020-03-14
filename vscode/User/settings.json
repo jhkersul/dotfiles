@@ -1,19 +1,62 @@
 {
-  "workbench.colorTheme": "Material Theme Palenight High Contrast",
   "editor.fontFamily": "Operator Mono SSm Lig",
   "editor.fontLigatures": true,
-  "editor.fontSize": 17,
-  "debug.console.fontSize": 15,
+  "editor.fontSize": 18,
+  "debug.console.fontSize": 17,
   "window.zoomLevel": 0,
   "workbench.editor.enablePreview": false,
   "window.title": "${activeEditorMedium}${separator}${rootName}",
   "editor.lineNumbers": "relative",
   "git.confirmSync": false,
   "git.autofetch": true,
-  "python.jediEnabled": false,
-  "workbench.colorCustomizations": {},
   "editor.tabSize": 2,
+  "vim.easymotion": true,
+  "vim.easymotionMarkerFontSize": "17",
+  "vim.easymotionMarkerWidthPerChar": 10,
+  "vim.easymotionMarkerHeight": 20,
+  "vim.easymotionMarkerYOffset": 7,
+  "vim.easymotionMarkerFontWeight": "bold",
+  "vim.easymotionMarkerBackgroundColor": "rgba(68, 68, 68, 0.9)",
+  "vim.easymotionMarkerForegroundColorOneChar": "#FFF",
+  "vim.easymotionMarkerForegroundColorTwoChar": "#CDCDCD",
+  "materialTheme.accent": "Red",
+  "vim.leader": ",",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "<leader>",
+        "t"
+      ],
+      "commands": [
+        "workbench.action.toggleSidebarVisibility"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "w"
+      ],
+      "after": [
+        "<leader>",
+        "<leader>",
+        "<leader>",
+        "b",
+        "d",
+        "w"
+      ]
+    }
+  ],
+  "workbench.activityBar.visible": true,
   "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-  }
+    "source.fixAll.eslint": true
+  },
+  "markdown.preview.fontSize": 17,
+  "terminal.integrated.fontSize": 17,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "workbench.colorTheme": "SynthWave '84",
+  "workbench.iconTheme": "helium-icon-theme"
 }

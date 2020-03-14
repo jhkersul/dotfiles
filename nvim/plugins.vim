@@ -31,13 +31,10 @@ Plug 'rstacruz/vim-closer'
 Plug 'easymotion/vim-easymotion'
 
 " Intellisense Engine
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-
-" Tmux/Neovim movement integration
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Denite - Fuzzy finding, buffer management
-Plug 'Shougo/denite.nvim', { 'commit': '29bfd4c53271c7a150def2388e059746ae4c1713' }
+Plug 'Shougo/denite.nvim'
 
 " Snippet support
 Plug 'Shougo/neosnippet'
