@@ -1,0 +1,6 @@
+name: dotfiles
+root: ~/Develop/dotfiles
+
+windows:
+  - editor: vim .
+  - git: gst

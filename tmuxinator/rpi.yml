@@ -1,0 +1,4 @@
+name: rpi
+root: ~/
+windows:
+  - ssh: ssh pi@192.168.15.17

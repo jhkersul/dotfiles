@@ -1,0 +1,9 @@
+name: creditas
+root: ~/Develop/Creditas
+
+windows:
+  - mediator: cd mediator && gst
+  - core: cd core && gst
+  - login: cd login-application && gst
+  - lf-auto: cd lead-form-auto-refi && gst
+  - lf-home: cd lead-form-home-refi && gst

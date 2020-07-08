@@ -13,7 +13,7 @@ This is my dotfiles config. One day it will have a installation script, for now 
 
 Run inside neovim:
 
-```
+```vim
 :PlugInstall
 ```
 
@@ -21,7 +21,7 @@ Run inside neovim:
 
 Run inside neovim:
 
-```
+```vim
 :CocInstall coc-eslint
 ```
 
