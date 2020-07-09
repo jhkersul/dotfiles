@@ -23,22 +23,6 @@ It also copy the configuration files to the correct folders.
 
 ## Commands to run after installation
 
-### Install NeoVim npm package
-
-On terminal, run:
-
-```bash
-npm install -g neovim
-```
-
-### Install neovim gem package
-
-On terminal, run:
-
-```bash
-gem install neovim
-```
-
 ### Install NeoVim Plugins
 
 Run inside NeoVim:
