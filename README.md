@@ -1,17 +1,47 @@
 # Kersul Dotfiles
 
-This is my dotfiles config. One day it will have a installation script, for now it's just a backup repo :)
+These are my dotfiles.
 
-## Required Apps
+It doesn't have the purpose to be general used,
+but maybe you can get some insights to create yours.
 
-- pip2/pip3
+## Installation Script (Only OSX)
+
+The installation script is responsible to install packages (using brew).
+
+It also copy the configuration files to the correct folders.
+
+```bash
+./install.sh
+```
+
+## Required Packages
+
+- Python 2 and 3
+- pip 2 and 3
 - ripgrep
 
-## Commands that is need to be runned
+## Commands to run after installation
 
-### Install Plugins
+### Install NeoVim npm package
 
-Run inside neovim:
+On terminal, run:
+
+```bash
+npm install -g neovim
+```
+
+### Install neovim gem package
+
+On terminal, run:
+
+```bash
+gem install neovim
+```
+
+### Install NeoVim Plugins
+
+Run inside NeoVim:
 
 ```vim
 :PlugInstall
@@ -19,7 +49,7 @@ Run inside neovim:
 
 ### Install Coc Eslint
 
-Run inside neovim:
+Run inside NeoVim:
 
 ```vim
 :CocInstall coc-eslint
