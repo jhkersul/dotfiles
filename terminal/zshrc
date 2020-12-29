@@ -1,5 +1,5 @@
 # ZSH Theme
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Zsh Plugins
 plugins=(
@@ -10,15 +10,15 @@ plugins=(
   zsh-autosuggestions
 )
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+# Oh My ZSH
+export ZSH="/Users/$USER/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
 
 # Tmux Main Editor
 export EDITOR='vim'
 
 # My private keys, that is on a private file (not shared)
-source ~/.private-keys
+# source ~/.private-keys
 
 # Aliases
 alias undo_not_pushed_commit="git reset HEAD~1"

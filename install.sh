@@ -71,6 +71,15 @@ function installMacOSLibs {
   installPip
 }
 
+function installOhMyZshPlugins {
+  printStep "Installing spaceship..."
+  git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+  ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+
+  printStep "Installing zsh auto suggestions..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+}
+
 printStep "## Install required libs (Only for MacOS) ##"
 
 if [ "$(uname)" == "Darwin" ]; then
@@ -79,6 +88,12 @@ else
   printError "Unsupported OS"
   exit
 fi
+
+printStep "## Install Oh My Zsh ##"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+printStep "## Install Oh My Zsh Plugins ##"
+installOhMyZshPlugins
 
 printStep "\n## Starting to copy configuration files ##"
 
