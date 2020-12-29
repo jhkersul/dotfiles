@@ -17,6 +17,9 @@ source $ZSH/oh-my-zsh.sh
 # Tmux Main Editor
 export EDITOR='vim'
 
+# Rbenv
+eval "$(rbenv init -)"
+
 # My private keys, that is on a private file (not shared)
 # source ~/.private-keys
 
@@ -24,4 +27,3 @@ export EDITOR='vim'
 alias undo_not_pushed_commit="git reset HEAD~1"
 alias reset_staging_branch="gco master && gl && gco staging && git reset --hard master && git push --force origin staging"
 alias vim=nvim
-
