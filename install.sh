@@ -52,6 +52,12 @@ function installMacOSLibs {
   printStep "Updating brew..."
   brew update
 
+  printStep "Installing neovim..."
+  brew install neovim
+
+  printStep "Installing tmux..."
+  brew install tmux
+
   printStep "Installing ripgrep..."
   brew install ripgrep
 
