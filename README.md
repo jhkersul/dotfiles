@@ -31,11 +31,3 @@ Run inside NeoVim:
 :PlugInstall
 ```
 
-### Install Coc Eslint
-
-Run inside NeoVim:
-
-```vim
-:CocInstall coc-eslint
-```
-
