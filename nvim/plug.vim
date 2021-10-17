@@ -13,13 +13,21 @@ Plug 'tpope/vim-rhubarb'
 Plug 'cohama/lexima.vim'
 " Language Server
 Plug 'neovim/nvim-lspconfig'
-Plug 'glepnir/lspsaga.nvim'
+"Plug 'glepnir/lspsaga.nvim' " ORIGINAL! Not working with nvim 0.5.1
+Plug 'tami5/lspsaga.nvim', { 'branch': 'nvim51' }
 " Language Server Installer (https://github.com/williamboman/nvim-lsp-installer)
 Plug 'williamboman/nvim-lsp-installer'
 " Treesitter - Syntax Highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Auto Completion
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+" Snippets
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'
 " FuzzyFinder - Telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -31,6 +39,15 @@ Plug 'puremourning/vimspector'
 Plug 'ryanoasis/vim-devicons'
 " Easy Motion Like
 Plug 'phaazon/hop.nvim'
+"  Commentary
+Plug 'b3nj5m1n/kommentary'
+" File Tree
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+" Spell check
+Plug 'f3fora/cmp-spell'
+" Rust Vim
+Plug 'rust-lang/rust.vim'
 
 " Plugins End
 call plug#end()

@@ -1,0 +1,9 @@
+clippy
+rustfmt
+fmt
+deps
+v1
+MONGO
+INITDB
+mongo
+cimg
