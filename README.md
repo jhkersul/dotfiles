@@ -20,6 +20,7 @@ It also copy the configuration files to the correct folders.
 - Python 2 and 3
 - pip 2 and 3
 - ripgrep
+- [vim-plug](https://github.com/junegunn/vim-plug#neovim)
 
 ## Commands to run after installation
 
@@ -30,4 +31,3 @@ Run inside NeoVim:
 ```vim
 :PlugInstall
 ```
-
