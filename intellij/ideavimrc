@@ -1,13 +1,16 @@
 " Setting <leader>
-let mapleader = ','
+" using space as leader
+let mapleader = " "
 
 " IDEA Actions
-nnoremap <leader>f :action FindInPath<cr>
-nnoremap <leader>t :action SearchEverywhere<cr>
+nnoremap <leader>st :action FindInPath<cr>
+nnoremap <leader>f :action SearchEverywhere<cr>
 nnoremap <leader>gi :action GotoImplementation<cr>
+nnoremap gi :action GotoImplementation<cr>
 nnoremap <leader>gt :action GotoTest<cr>
 nnoremap <leader>su :action ShowUsages<cr>
-nnoremap <leader>r :action Run<cr>
+nnoremap <leader>r :action RunContextGroup<cr>
+nnoremap <leader>s :action Stop<cr>
 nnoremap <leader>d :action Debug<cr>
 nnoremap ]e :action GotoNextError<cr>
 nnoremap [e :action GotoPreviousError<cr>
@@ -16,11 +19,22 @@ nnoremap [e :action GotoPreviousError<cr>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnodemap <C-H> <C-W><C-H>
 
 " Turn relative line numbers on
 set relativenumber
+set number
 
 " KJump
-nnoremap <leader>w :action KJumpAction.Word0<cr>
+set easymotion
+nmap <leader>w <Plug>(easymotion-jumptoanywhere)
+
+" Clipboard fix
+map <leader>y "*y
+map <leader>p "*p
+set clipboard=unnamed
+
+" Set NerdTree
+set NERDTree
+nnoremap <leader>e :NERDTreeToggle<cr>
 

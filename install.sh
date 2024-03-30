@@ -110,9 +110,9 @@ if [ "$choice" = "y" ]; then
 fi
 
 echo -e ""
-read -p "Copy nvim config files? [~/.config/nvim/] (y/n)? " choice
+read -p "Copy lunarvim config files? [~/.config/nvim/] (y/n)? " choice
 if [ "$choice" = "y" ]; then
-  cp -R nvim ~/.config
+  cp -R lvim ~/.config/lvim
 fi
 
 echo -e ""
