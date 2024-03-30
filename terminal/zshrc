@@ -1,5 +1,6 @@
 # ZSH Theme
 ZSH_THEME="spaceship"
+ZSH_TMUX_AUTOSTART=true
 
 # Zsh Plugins
 plugins=(
@@ -8,6 +9,7 @@ plugins=(
   docker
   history-substring-search
   zsh-autosuggestions
+  tmux
 )
 
 # Oh My ZSH
