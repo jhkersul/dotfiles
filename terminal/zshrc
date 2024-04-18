@@ -1,6 +1,6 @@
 # ZSH Theme
 ZSH_THEME="robbyrussell"
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 
 # Zsh Plugins
 plugins=(
@@ -11,6 +11,12 @@ plugins=(
   zsh-autosuggestions
   tmux
 )
+
+# Autostart tmux on Kitty
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+  tmux attach || exec tmux new-session && exit;
+fi
+
 
 # Oh My ZSH
 export ZSH="/Users/$USER/.oh-my-zsh"
@@ -27,5 +33,9 @@ eval "$(rbenv init -)"
 
 # Aliases
 alias undo_not_pushed_commit="git reset HEAD~1"
-alias reset_staging_branch="gco master && gl && gco staging && git reset --hard master && git push --force origin staging"
 alias vim=nvim
+alias gcs="gh copilot suggest"
+
+# Tmux plugins
+export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
+
