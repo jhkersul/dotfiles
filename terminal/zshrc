@@ -39,3 +39,6 @@ alias gcs="gh copilot suggest"
 # Tmux plugins
 export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
 
+# Accept zsh-autosuggestions with Ctrl + L
+bindkey '^L' autosuggest-accept
+
