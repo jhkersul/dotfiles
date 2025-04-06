@@ -8,6 +8,9 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.motion.hop-nvim" },
-  { import = "astrocommunity.test.neotest" },
+  { import = "astrocommunity.pack.go" },
+  { import = "astrocommunity.pack.kotlin" },
+  { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.pack.yaml" },
+  { import = "astrocommunity.pack.bash" },
 }

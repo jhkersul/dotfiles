@@ -6,7 +6,8 @@ let mapleader = " "
 nnoremap <leader>st :action FindInPath<cr>
 nnoremap <leader>f :action SearchEverywhere<cr>
 nnoremap <leader>gi :action GotoImplementation<cr>
-nnoremap gi :action GotoImplementation<cr>
+nnoremap gI :action GotoImplementation<cr>
+nnoremap gd :action GotoDeclaration<cr>
 nnoremap <leader>gt :action GotoTest<cr>
 nnoremap <leader>su :action ShowUsages<cr>
 nnoremap <leader>r :action RunContextGroup<cr>
@@ -19,7 +20,10 @@ nnoremap [e :action GotoPreviousError<cr>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
-nnodemap <C-H> <C-W><C-H>
+nnoremap <C-H> <C-W><C-H>
+
+" Toggle Terminal
+nnoremap <C-\> :action ActivateTerminalToolWindow<cr>
 
 " Turn relative line numbers on
 set relativenumber
@@ -38,3 +42,5 @@ set clipboard=unnamed
 set NERDTree
 nnoremap <leader>e :NERDTreeToggle<cr>
 
+" Set surround
+set surround
