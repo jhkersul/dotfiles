@@ -153,3 +153,11 @@ for _, motion in ipairs(motions) do
     hl.dsp.window.swap({ direction = motion.direction })
   )
 end
+
+-- SUPER + 1..9 switch tabs, matching Cmd+1..9 on macOS -- 1-8 pick that tab and
+-- 9 jumps to the last one, which is what CTRL + 9 does in Chromium. The SUPER
+-- number row was freed when workspace switching moved to ALT above.
+for tab = 1, 9 do
+  local label = tab < 9 and ("Switch to tab " .. tab) or "Switch to last tab"
+  o.bind("SUPER + code:" .. tostring(tab + 9), label, send_shortcut_once("CTRL", tostring(tab)))
+end

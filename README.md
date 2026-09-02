@@ -68,14 +68,17 @@ copy/paste/cut).
 | `SUPER + T` | New tab — sends `CTRL + T` | Toggle floating/tiling |
 | `SUPER + W` | Close tab — sends `CTRL + W` | Close window |
 | `SUPER + Q` | Close window | unbound |
+| `SUPER + 1`…`9` | Switch to tab 1–8, 9 = last tab | `SUPER + 1`…`0` workspaces |
 | `ALT + W` | Float as a fixed-size panel, top centre | unbound |
 | `ALT + H/J/K/L` | Focus window left/down/up/right | `SUPER +` arrows |
 | `ALT + SHIFT + H/J/K/L` | Swap window left/down/up/right | `SUPER + SHIFT +` arrows |
 | `ALT + 1`…`0` | Switch to workspace 1–10 | `SUPER + 1`…`0` |
 | `SUPER + SHIFT + W` | Reboot into Windows | Omawrite |
 
-Moving workspaces to `ALT` frees the whole `SUPER + 1`…`0` row, which is where
-Chromium puts tab switching on macOS.
+Moving workspaces to `ALT` freed the `SUPER` number row, which now does tab
+switching by injecting `CTRL + 1`…`9` — so `SUPER + 1`…`9` matches Cmd+1…9 on
+macOS, last-tab-on-9 included. `SUPER + 0` is left free (Cmd+0 is reset-zoom on
+macOS, i.e. `CTRL + 0`, if that's ever wanted).
 
 `ALT + W` doesn't just toggle floating — it floats the window as a fixed
 `1600x1000` panel pinned to the top centre of the monitor, and tiles it back on a
