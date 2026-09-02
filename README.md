@@ -22,6 +22,8 @@ does window-manager things.
 | --- | --- |
 | `omarchy/bindings.lua` | `~/.config/hypr/bindings.lua` |
 | `omarchy/hid_apple.conf` | `/etc/modprobe.d/hid_apple.conf` (root) |
+| `omarchy/zshrc` | `~/.zshrc` |
+| `omarchy/starship.toml` | `~/.config/starship.toml` |
 
 Hyprland auto-reloads on save. Validate with `hyprctl configerrors` after any
 change, and see current bindings with `omarchy menu keybindings --print`.
@@ -128,3 +130,55 @@ literal `"1"`–`"0"`, matching Omarchy's default so it survives a layout change
 `~/.config/hypr/input.lua` carries a `caps:swapescape` override (Caps Lock on
 the physical Escape key). Predates this folder — worth copying in if this
 machine ever gets rebuilt.
+
+### Shell: zsh
+
+Running zsh via [`omarchy-zsh`](https://github.com/omacom-io/omarchy-zsh), the
+officially maintained Omarchy zsh port — so `omarchy update` keeps it working
+rather than fighting it.
+
+```sh
+omarchy pkg add omarchy-zsh zsh-autosuggestions zsh-history-substring-search
+omarchy-setup-zsh
+git clone https://github.com/jhkersul/zsh-git-aliases ~/.zsh/zsh-git-aliases
+# then copy omarchy/zshrc over ~/.zshrc
+```
+
+`omarchy-setup-zsh` does **not** run `chsh`. The login shell stays `/usr/bin/bash`
+and `~/.bashrc` becomes a stub that `exec zsh`s for interactive shells — so a
+broken zsh config can't lock you out. It overwrites both rc files, backing them
+up as `.bashrc.backup-*` / `.zshrc.backup-*` first; the Cloudflare env line at
+the bottom of `zshrc` was carried over from the old `~/.bashrc` that way.
+
+Four additions on top of omarchy-zsh's defaults:
+
+| Want | How |
+| --- | --- |
+| vi mode | `bindkey -v` plus `KEYTIMEOUT=1`. Must come *after* omarchy-zsh's `zoptions`, which ends on `bindkey -e` |
+| History substring search | `zsh-history-substring-search`, bound to ↑/↓ and to `k`/`j` in vicmd |
+| Autosuggestions | `zsh-autosuggestions`, accepted with `Ctrl+L` |
+| `gst` and friends | [`zsh-git-aliases`](https://github.com/jhkersul/zsh-git-aliases) — oh-my-zsh's 197 git aliases, standalone |
+
+Ordering is load-order sensitive, hence the comments in the file:
+
+- `bindkey -v` after `zoptions`, or emacs mode wins.
+- The ↑/↓ rebinding after `zoptions` too, which binds them to *prefix* search.
+- `zsh-history-substring-search` after `zsh-syntax-highlighting` (which
+  omarchy-zsh sources at the end of `zoptions`), as its README requires for
+  match highlighting.
+- vi insert mode drops several emacs editing keys, so `^A ^E ^K ^U ^W ^R` are
+  re-bound in `viins`. `^?` especially: without it backspace won't delete past
+  wherever insert mode started.
+
+**One alias changes meaning.** omarchy-zsh has `gcm='git commit -m'`; oh-my-zsh
+has `gcm='git checkout $(git_main_branch)'` and puts commit-with-message on
+`gcmsg`. `zsh-git-aliases` is sourced last, so oh-my-zsh wins — matching the
+macOS muscle memory this whole setup is built around. There's a commented-out
+line in `zshrc` to flip it back. `gcam` means the same thing in both, and
+omarchy's `gcad` is untouched since oh-my-zsh doesn't define it.
+
+`Ctrl+L` is autosuggest-accept, so it no longer clears the screen — use `clear`.
+
+`starship.toml` gains `vimcmd_symbol`, a yellow `❮` shown while vi normal mode is
+active. Starship's zsh integration installs `starship_zle-keymap-select`, so this
+needs no extra plugin.

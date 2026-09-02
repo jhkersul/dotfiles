@@ -1,0 +1,64 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Load zsh options, keybindings, and completion
+[[ -f /usr/share/omarchy-zsh/shell/zoptions ]] && source /usr/share/omarchy-zsh/shell/zoptions
+
+# Load shared shell configuration (aliases, functions, environment, tool init)
+[[ -f /usr/share/omarchy-zsh/shell/all ]] && source /usr/share/omarchy-zsh/shell/all
+
+# ---------------------------------------------------------------------------
+# vi mode
+# ---------------------------------------------------------------------------
+# omarchy-zsh's zoptions ends with `bindkey -e`, so this has to come after it.
+bindkey -v
+KEYTIMEOUT=1  # 10ms rather than 400ms, so ESC leaves insert mode instantly
+
+# Keep the emacs-style editing keys that vi insert mode otherwise drops.
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
+bindkey -M viins '^K' kill-line
+bindkey -M viins '^U' backward-kill-line
+bindkey -M viins '^W' backward-kill-word
+bindkey -M viins '^R' history-incremental-search-backward
+# Without this, backspace refuses to delete past the point insert mode began.
+bindkey -M viins '^?' backward-delete-char
+
+# ---------------------------------------------------------------------------
+# Plugins
+# ---------------------------------------------------------------------------
+# Inline suggestion from history as you type.
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Accept the suggestion with Ctrl+L. This replaces clear-screen -- use `clear`.
+bindkey '^L' autosuggest-accept
+
+# Up/down match anywhere in the command rather than only its prefix. Sourced
+# after zsh-syntax-highlighting (loaded at the end of omarchy-zsh's zoptions),
+# which is what its README requires for match highlighting to work.
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up    # replaces omarchy's prefix search
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+# gst, gco, gcb, gpsup and ~190 more -- oh-my-zsh's git aliases, standalone.
+# https://github.com/jhkersul/zsh-git-aliases
+#
+# Sourced last of the three so its names win on conflict, matching the
+# oh-my-zsh behaviour carried over from macOS. One name genuinely changes
+# meaning: omarchy-zsh has `gcm='git commit -m'`, while oh-my-zsh has
+# `gcm='git checkout $(git_main_branch)'` and puts commit-with-message on
+# `gcmsg`. Uncomment below to keep omarchy's meaning instead.
+source ~/.zsh/zsh-git-aliases/zsh-git-aliases.plugin.zsh
+# alias gcm='git commit -m'
+
+# ---------------------------------------------------------------------------
+# Personal
+# ---------------------------------------------------------------------------
+# EDITOR is already nvim via omarchy-zsh's envs.
+alias vim=nvim
+alias gcs='gh copilot suggest'
+alias undo_not_pushed_commit='git reset HEAD~1'
+
+# Cloudflare credentials for flarectl (file is 0600, not in version control)
+[[ -r ~/.config/cloudflare/env ]] && source ~/.config/cloudflare/env
