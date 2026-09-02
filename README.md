@@ -10,3 +10,118 @@ but maybe you can get some insights to create yours.
 - Python 3
 - pip 3
 - ripgrep
+
+## Omarchy (Linux)
+
+Config for my [Omarchy](https://omarchy.org/) machine — Arch + Hyprland.
+The goal is a Mac-like keyboard feel, so muscle memory carries over from the
+macOS side of this repo: Super (Cmd) does app-level shortcuts, Alt (Option)
+does window-manager things.
+
+| File | Copy to |
+| --- | --- |
+| `omarchy/bindings.lua` | `~/.config/hypr/bindings.lua` |
+| `omarchy/hid_apple.conf` | `/etc/modprobe.d/hid_apple.conf` (root) |
+
+Hyprland auto-reloads on save. Validate with `hyprctl configerrors` after any
+change, and see current bindings with `omarchy menu keybindings --print`.
+
+### Keychron K1: swapping Option and Command
+
+The K1 stays on the **Windows** side of its Mac/Win slider, so the Windows
+dual-boot gets a keyboard that matches what it expects. That leaves the
+modifiers backwards from the printed legends under Linux — the key labelled
+Command sends Alt, and Option sends Super.
+
+`hid_apple.conf` fixes it Linux-side only:
+
+```
+options hid_apple fnmode=2 swap_opt_cmd=1
+```
+
+Over Bluetooth the K1 advertises Apple's vendor ID (`05AC:024F`), so the kernel
+binds it to the `apple` HID driver, which offers `swap_opt_cmd` for exactly
+this. The driver reads the flag per key event, so it can be flipped live
+without a reboot or re-pair:
+
+```sh
+echo 1 | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd
+```
+
+`hid_apple` isn't in the initramfs here, so `modprobe.d` alone makes it stick —
+no `mkinitcpio -P` needed. Caveats: the flag is per-driver, not per-device, so
+any other Apple-vendor keyboard gets the same swap. And if the slider ever goes
+back to **Mac**, set this to `0` or the two swaps cancel out.
+
+`fnmode=2` was already there — F-row sends media keys by default, hold Fn for
+F1–F12, same as a real Mac. `fnmode=1` inverts that.
+
+### Keybindings
+
+`bindings.lua` only holds overrides; Omarchy's defaults load first and are left
+alone where they already do the right thing (`SUPER + C/V/X` for
+copy/paste/cut).
+
+| Binding | Action | Was |
+| --- | --- | --- |
+| `SUPER + A` | Select all — sends `CTRL + A` | unbound |
+| `SUPER + T` | New tab — sends `CTRL + T` | Toggle floating/tiling |
+| `SUPER + W` | Close tab — sends `CTRL + W` | Close window |
+| `SUPER + Q` | Close window | unbound |
+| `ALT + W` | Float as a fixed-size panel, top centre | unbound |
+| `ALT + H/J/K/L` | Focus window left/down/up/right | `SUPER +` arrows |
+| `ALT + SHIFT + H/J/K/L` | Swap window left/down/up/right | `SUPER + SHIFT +` arrows |
+| `ALT + 1`…`0` | Switch to workspace 1–10 | `SUPER + 1`…`0` |
+| `SUPER + SHIFT + W` | Reboot into Windows | Omawrite |
+
+Moving workspaces to `ALT` frees the whole `SUPER + 1`…`0` row, which is where
+Chromium puts tab switching on macOS.
+
+`ALT + W` doesn't just toggle floating — it floats the window as a fixed
+`1600x1000` panel pinned to the top centre of the monitor, and tiles it back on a
+second press. Adjust `FLOAT_WIDTH` / `FLOAT_HEIGHT` / `FLOAT_GAP` at the top of
+that block. Two things it has to get right: geometry is applied on the next tick
+via `hl.timer`, because Hyprland floats asynchronously and the size won't stick
+otherwise; and the logical monitor size is *rounded*, since dividing by a
+fractional scale is inexact (this display is 3840x2160 at scale 1.6, and
+`3840 / 1.6` evaluates to 2399.99996 — enough to lose a pixel when centring).
+
+Floating windows are otherwise moved and resized with `SUPER +` left-drag and
+`SUPER +` right-drag, plus Omarchy's `SUPER + -` / `SUPER + =` resize bindings
+(add `SHIFT` for height, `ALT` for 25px steps, `CTRL` for 300px). There is no
+default *keyboard* binding for moving a float.
+
+`ALT + SHIFT + L` shadows Omarchy's "Copy URL from Web App", which is a Chromium
+*extension* shortcut rather than a Hyprland binding — the keybindings menu lists
+it, but `hyprctl binds` doesn't, and Hyprland claims the chord before the browser
+ever sees it. Only the arrow bindings replaced by `H/J/K/L` were unbound; the
+group moves on `SUPER + ALT +` arrows, monitor moves on `SUPER + SHIFT + ALT +`
+arrows, and grouped focus on `SUPER + CTRL +` arrows are all still there.
+
+Hyprland can't translate one chord into another, so the "universal" bindings
+inject the target chord into the focused surface with `send_key_state`, copying
+the approach in `/usr/share/omarchy/default/hypr/bindings/clipboard.lua`. Two
+details from there matter: a virtual keyboard (`wtype`) doesn't work because the
+physically held Super merges into the injected chord at the seat, and the
+down/up split works around Hyprland occasionally leaving synthetic key state
+stuck ([Hyprland#14099](https://github.com/hyprwm/Hyprland/discussions/14099)).
+
+Known rough edge: the injected chords are unconditional, so in a terminal they
+reach readline instead of closing or opening anything — `CTRL + T` transposes
+characters, and `CTRL + W` rubs out the previous word. Either bind `super+t` and
+`super+w` in the terminal itself so they never reach the shell, or neutralise
+them in `~/.inputrc`:
+
+```
+"\C-t": self-insert
+"\C-w": self-insert
+```
+
+Workspace switching uses the `code:10`–`code:19` keycode form rather than
+literal `"1"`–`"0"`, matching Omarchy's default so it survives a layout change.
+
+### Not captured here
+
+`~/.config/hypr/input.lua` carries a `caps:swapescape` override (Caps Lock on
+the physical Escape key). Predates this folder — worth copying in if this
+machine ever gets rebuilt.
