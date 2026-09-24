@@ -1,0 +1,13 @@
+# Run omarchy-restart-xcompose to apply changes
+
+# Include fast emoji access
+include "/usr/share/omarchy/default/xcompose"
+
+# Identification
+<Multi_key> <space> <n> : "Joao Kersul"
+<Multi_key> <space> <e> : "joaohkfaria@gmail.com"
+
+# PT-BR cedilla: ' + c -> c-cedilla
+# The en_US.UTF-8 Compose table maps dead_acute + c to c-acute; override it.
+<dead_acute> <c> : "ç" ccedilla
+<dead_acute> <C> : "Ç" Ccedilla

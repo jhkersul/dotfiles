@@ -21,6 +21,8 @@ does window-manager things.
 | File | Copy to |
 | --- | --- |
 | `omarchy/bindings.lua` | `~/.config/hypr/bindings.lua` |
+| `omarchy/input.lua` | `~/.config/hypr/input.lua` |
+| `omarchy/XCompose` | `~/.XCompose` |
 | `omarchy/hid_apple.conf` | `/etc/modprobe.d/hid_apple.conf` (root) |
 | `omarchy/zshrc` | `~/.zshrc` |
 | `omarchy/starship.toml` | `~/.config/starship.toml` |
@@ -129,11 +131,56 @@ than literal `"1"`–`"0"`, matching Omarchy's default so it survives a layout
 change. Only the plain move went to `ALT + SHIFT`; Omarchy's silent move (window
 goes, focus stays) is still on `SUPER + SHIFT + ALT + 1`…`0`.
 
-### Not captured here
+### Keyboard layout: US International with dead keys
 
-`~/.config/hypr/input.lua` carries a `caps:swapescape` override (Caps Lock on
-the physical Escape key). Predates this folder — worth copying in if this
-machine ever gets rebuilt.
+`omarchy/input.lua` sets `kb_variant = "intl"` so PT-BR accents can be typed on
+US hardware without a second layout to toggle:
+
+| Type | Get |
+| --- | --- |
+| `'` then a e i o u | á é í ó ú |
+| `~` then a o n | ã õ ñ |
+| `^` then a e o | â ê ô |
+| `` ` `` then a e | à è |
+| `"` then u | ü |
+| `'` then c | ç — see XCompose below |
+| AltGr + `,` | ç |
+
+The five dead keys (`'` `"` `` ` `` `~` `^`) no longer emit on their own — follow
+one with Space for the literal character, or use AltGr for it directly
+(AltGr+`'` = `'`, AltGr+Shift+`'` = `"`, AltGr+`` ` `` = `` ` ``,
+AltGr+Shift+`` ` `` = `~`, AltGr+Shift+`6` = `^`).
+
+The `intl` variant makes **Right Alt** the AltGr (level 3) modifier, so right
+Alt no longer fires the `ALT` window-manager bindings in `bindings.lua` — left
+Alt (Option) still does.
+
+The same file also keeps the `caps:swapescape` override (Caps Lock on the
+physical Escape key), replacing Omarchy's default `compose:caps` and
+`shift:both_capslock_cancel`.
+
+### XCompose: `'` + c gives ç, not ć
+
+`intl` puts ç on AltGr + `,`, but the natural PT-BR reflex is `'` then `c`. That
+sequence is resolved by the *Compose* table rather than by the layout, and
+`/usr/share/X11/locale/en_US.UTF-8/Compose` maps `dead_acute` + `c` to **ć**
+(Polish c-acute). `omarchy/XCompose` overrides the two entries:
+
+```
+<dead_acute> <c> : "ç" ccedilla
+<dead_acute> <C> : "Ç" Ccedilla
+```
+
+Duplicate sequences resolve last-definition-wins, so these must come *after* the
+`include "/usr/share/omarchy/default/xcompose"` line (which itself pulls in the
+locale table via `include "%L"`). Both AltGr + `,` and `'` + c now produce ç;
+what is lost is ć/Ć, which PT-BR never needs.
+
+Compose is read once at input-method startup, so apply changes with
+`omarchy-restart-xcompose` — it stops the stale fcitx5 before starting the
+service, otherwise the old table keeps being served and the restart reports
+success while changing nothing. Already-running apps need a restart to pick up
+the new table.
 
 ### Shell: zsh
 
