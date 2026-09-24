@@ -76,6 +76,7 @@ copy/paste/cut).
 | `ALT + H/J/K/L` | Focus window left/down/up/right | `SUPER +` arrows |
 | `ALT + SHIFT + H/J/K/L` | Swap window left/down/up/right | `SUPER + SHIFT +` arrows |
 | `ALT + 1`…`0` | Switch to workspace 1–10 | `SUPER + 1`…`0` |
+| `ALT + SHIFT + 1`…`0` | Move window to workspace 1–10 | `SUPER + SHIFT + 1`…`0` |
 | `SUPER + SHIFT + W` | Reboot into Windows | Omawrite |
 
 Moving workspaces to `ALT` freed the `SUPER` number row, which now does tab
@@ -123,8 +124,10 @@ them in `~/.inputrc`:
 "\C-w": self-insert
 ```
 
-Workspace switching uses the `code:10`–`code:19` keycode form rather than
-literal `"1"`–`"0"`, matching Omarchy's default so it survives a layout change.
+Workspace switching and moving use the `code:10`–`code:19` keycode form rather
+than literal `"1"`–`"0"`, matching Omarchy's default so it survives a layout
+change. Only the plain move went to `ALT + SHIFT`; Omarchy's silent move (window
+goes, focus stays) is still on `SUPER + SHIFT + ALT + 1`…`0`.
 
 ### Not captured here
 

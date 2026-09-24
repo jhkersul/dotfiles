@@ -108,16 +108,24 @@ o.bind("ALT + W", "Float window top centre", function()
   end, { timeout = 20, type = "oneshot" })
 end)
 
--- Switch workspaces with ALT + 1..0 instead of SUPER + 1..0, freeing the Super
--- (Cmd) row for app-level shortcuts. Uses the same `code:` form as Omarchy's
--- default in $OMARCHY_PATH/default/hypr/bindings/tiling.lua, so it binds the
--- physical number-row keys regardless of keyboard layout.
--- Note: SUPER + 1..0 were previously "Switch to workspace 1..10"; they are now
--- unbound. Move-window bindings (SUPER + SHIFT + N) are unchanged.
+-- Switch workspaces with ALT + 1..0 and move the active window there with
+-- ALT + SHIFT + 1..0, instead of SUPER + 1..0 / SUPER + SHIFT + 1..0, freeing
+-- the Super (Cmd) row for app-level shortcuts. Uses the same `code:` form as
+-- Omarchy's default in $OMARCHY_PATH/default/hypr/bindings/tiling.lua, so it
+-- binds the physical number-row keys regardless of keyboard layout.
+-- Note: SUPER + 1..0 were previously "Switch to workspace 1..10" and
+-- SUPER + SHIFT + 1..0 "Move window to workspace 1..10"; both are now unbound.
+-- The silent move (SUPER + SHIFT + ALT + N) is unchanged.
 for workspace = 1, 10 do
   local key = "code:" .. tostring(workspace + 9)
   hl.unbind("SUPER + " .. key)
+  hl.unbind("SUPER + SHIFT + " .. key)
   o.bind("ALT + " .. key, "Switch to workspace " .. workspace, hl.dsp.focus({ workspace = tostring(workspace) }))
+  o.bind(
+    "ALT + SHIFT + " .. key,
+    "Move window to workspace " .. workspace,
+    hl.dsp.window.move({ workspace = tostring(workspace) })
+  )
 end
 
 -- SUPER + W closes a tab and SUPER + Q closes the window, mirroring the macOS
