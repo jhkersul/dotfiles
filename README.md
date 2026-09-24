@@ -26,6 +26,7 @@ does window-manager things.
 | `omarchy/hid_apple.conf` | `/etc/modprobe.d/hid_apple.conf` (root) |
 | `omarchy/zshrc` | `~/.zshrc` |
 | `omarchy/starship.toml` | `~/.config/starship.toml` |
+| `omarchy/shell.json` | `~/.config/omarchy/shell.json` |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` |
 
 Hyprland auto-reloads on save. Validate with `hyprctl configerrors` after any
@@ -181,6 +182,14 @@ Compose is read once at input-method startup, so apply changes with
 service, otherwise the old table keeps being served and the restart reports
 success while changing nothing. Already-running apps need a restart to pick up
 the new table.
+
+### Idle and lock
+
+`omarchy/shell.json` is the Omarchy shell config (bar layout, plugins, idle).
+The one deliberate change from the default is the idle lock: `idle.lock` is
+`1800`, so the screen locks after 30 minutes idle instead of 5. The screensaver
+still starts at `idle.screensaver` (150 s). Both values are seconds since idle
+began, and the shell hot-reloads the file on save.
 
 ### Shell: zsh
 
