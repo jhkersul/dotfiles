@@ -27,6 +27,7 @@ does window-manager things.
 | `omarchy/zshrc` | `~/.zshrc` |
 | `omarchy/starship.toml` | `~/.config/starship.toml` |
 | `omarchy/shell.json` | `~/.config/omarchy/shell.json` |
+| `omarchy/chromium-spellcheck.json` | `/etc/chromium/policies/managed/spellcheck.json` (root, 0644) |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` |
 
 Hyprland auto-reloads on save. Validate with `hyprctl configerrors` after any
@@ -190,6 +191,37 @@ The one deliberate change from the default is the idle lock: `idle.lock` is
 `1800`, so the screen locks after 30 minutes idle instead of 5. The screensaver
 still starts at `idle.screensaver` (150 s). Both values are seconds since idle
 began, and the shell hot-reloads the file on save.
+
+### Spellcheck: PT-BR alongside English
+
+Linux has no system-wide spellchecker. Every Chromium or Electron app runs its
+own, and each one defaults to the UI locale. `LANG` is `en_US.UTF-8` here, so
+Portuguese got underlined in red everywhere.
+
+`omarchy/chromium-spellcheck.json` is a Chromium machine policy that forces
+`pt-BR` and `en-US` on. It applies to every profile and to Omarchy's web apps,
+which are Chromium `--app` windows. Install it as root:
+
+```sh
+sudo install -m 0644 -o root -g root -T omarchy/chromium-spellcheck.json \
+  /etc/chromium/policies/managed/spellcheck.json
+```
+
+Chromium watches that directory and reloads the policy without a restart, then
+downloads `pt-BR-3-0.bdic` into `~/.config/chromium/Dictionaries`. Check it at
+`chrome://policy`. The file has to be **root-owned**: Omarchy's install purges
+anything in that directory that isn't. It sits next to Omarchy's own
+`color.json`, which `omarchy theme set` rewrites and leaves this file alone.
+
+Electron apps each keep their own list, so the policy doesn't reach them:
+
+- **Obsidian** and **Claude Desktop** use Electron's stored list. With the app
+  closed, set `spellcheck.dictionaries` to `["pt-BR","en-US"]` in
+  `~/.config/<app>/Preferences`. The app overwrites that file on exit, so it
+  has to be closed first.
+- **Slack** keeps its own setting, `spellcheckerLanguage` in
+  `storage/root-state.json`, and ignores `Preferences`. Change it in Slack under
+  Preferences → Language & region → Spellcheck.
 
 ### Shell: zsh
 
