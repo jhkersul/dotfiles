@@ -24,6 +24,7 @@ does window-manager things.
 | `omarchy/hid_apple.conf` | `/etc/modprobe.d/hid_apple.conf` (root) |
 | `omarchy/zshrc` | `~/.zshrc` |
 | `omarchy/starship.toml` | `~/.config/starship.toml` |
+| `herdr/config.toml` | `~/.config/herdr/config.toml` |
 
 Hyprland auto-reloads on save. Validate with `hyprctl configerrors` after any
 change, and see current bindings with `omarchy menu keybindings --print`.
@@ -182,3 +183,18 @@ omarchy's `gcad` is untouched since oh-my-zsh doesn't define it.
 `starship.toml` gains `vimcmd_symbol`, a yellow `❮` shown while vi normal mode is
 active. Starship's zsh integration installs `starship_zle-keymap-select`, so this
 needs no extra plugin.
+
+### Herdr
+
+`herdr/config.toml` ports Omarchy's tmux config to [Herdr](https://herdr.dev):
+tmux sessions, windows and panes become workspaces, tabs and panes, on the same
+`Ctrl+Space` prefix. The comments in the file map each setting back to its tmux
+original.
+
+It pins `terminal.default_shell = "/usr/bin/zsh"`. Herdr spawns `$SHELL` by
+default, which is still bash (no `chsh`, see above), and the `~/.bashrc` stub
+only `exec`s zsh when `SHLVL` is 1. The Herdr server itself runs at `SHLVL=1`,
+so its panes start at 2 and silently stay in bash.
+
+Validate with `herdr config check` and apply with `herdr server reload-config`.
+Open panes keep their shell; new ones get zsh.
