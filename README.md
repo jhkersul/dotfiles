@@ -187,10 +187,10 @@ the new table.
 ### Idle and lock
 
 `omarchy/shell.json` is the Omarchy shell config (bar layout, plugins, idle).
-The one deliberate change from the default is the idle lock: `idle.lock` is
-`1800`, so the screen locks after 30 minutes idle instead of 5. The screensaver
-still starts at `idle.screensaver` (150 s). Both values are seconds since idle
-began, and the shell hot-reloads the file on save.
+The deliberate changes from the default are the idle timers: `idle.screensaver`
+is `600`, so the screensaver starts after 10 minutes instead of 2.5, and
+`idle.lock` is `1800`, so the screen locks after 30 minutes instead of 5. Both
+values are seconds since idle began, and the shell hot-reloads the file on save.
 
 ### Spellcheck: PT-BR alongside English
 
