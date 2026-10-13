@@ -289,3 +289,19 @@ so its panes start at 2 and silently stay in bash.
 
 Validate with `herdr config check` and apply with `herdr server reload-config`.
 Open panes keep their shell; new ones get zsh.
+
+## Finicky (macOS)
+
+[Finicky](https://github.com/johnste/finicky) is set as the default browser and
+routes each link to an app. Links to my Linear workspace open straight in the
+Linear desktop app instead of bouncing through the browser; everything else
+goes to Dia.
+
+| File | Copy to |
+| --- | --- |
+| `finicky/finicky.js` | `~/.finicky.js` |
+
+Install with `brew install --cask finicky`, then pick Finicky in System
+Settings → Desktop & Dock → Default web browser. Linear workspaces are listed
+in `LINEAR_WORKSPACES`; only their paths are rewritten, so docs, login and
+OAuth pages on linear.app still open in the browser.
