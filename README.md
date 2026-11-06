@@ -29,6 +29,7 @@ does window-manager things.
 | `omarchy/shell.json` | `~/.config/omarchy/shell.json` |
 | `omarchy/chromium-spellcheck.json` | `/etc/chromium/policies/managed/spellcheck.json` (root, 0644) |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` |
+| `mise/config.toml` | `~/.config/mise/config.toml` |
 
 Hyprland auto-reloads on save. Validate with `hyprctl configerrors` after any
 change, and see current bindings with `omarchy menu keybindings --print`.
@@ -289,6 +290,39 @@ so its panes start at 2 and silently stay in bash.
 
 Validate with `herdr config check` and apply with `herdr server reload-config`.
 Open panes keep their shell; new ones get zsh.
+
+### CLI tools: mise, not the AUR
+
+`mise/config.toml` installs the command-line tools with
+[mise](https://mise.jdx.dev) instead of the AUR. They install per user, without
+root or community PKGBUILDs, and track upstream more closely than the AUR
+packages did. Omarchy itself is moving away from the AUR. Restore with
+`mise install` and update with `mise up`.
+
+Three tools come straight from GitHub releases, because mise's registry doesn't
+carry them under the expected name:
+
+- `github:mongodb/mongodb-atlas-cli` gives `atlas`. The registry's `atlas` is
+  Ariga's schema tool, not MongoDB's.
+- `github:confluentinc/cli` gives `confluent`.
+- `github:cloudflare/cloudflare-go` gives `flarectl`.
+
+`gcloud` keeps `gke-gcloud-auth-plugin` and `docker-credential-gcloud` in its own
+`bin`, and `~/.kube/config` and `~/.docker/config.json` call them by name. If
+kubectl can't find the plugin after a gcloud upgrade, run
+`gcloud components install gke-gcloud-auth-plugin`.
+
+Linear runs as an Omarchy web app
+(`omarchy-webapp-install Linear https://linear.app ""`) instead of the
+`linear-bin` desktop client.
+
+These stay on the AUR, since they run as root or at boot:
+
+- `coolercontrol-bin` and `coolercontrold-bin`, the fan-control daemon.
+- `mkinitcpio-clevis-hook`, which unlocks LUKS through the TPM at boot. It is
+  added by hand to the `HOOKS` line in
+  `/etc/mkinitcpio.conf.d/omarchy_hooks.conf`. Don't accept that file's
+  `.pacnew` as-is, or TPM unlock stops.
 
 ## Finicky (macOS)
 

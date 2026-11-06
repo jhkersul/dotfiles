@@ -1,0 +1,14 @@
+[tools]
+antigravity-cli = { version = "latest", minimum_release_age = "0s", lazy = true, auto_update = "4h" }
+gcloud = "latest"
+"github:cloudflare/cloudflare-go" = "latest"
+"github:confluentinc/cli" = "latest"
+"github:mongodb/mongodb-atlas-cli" = "latest"
+go = "1.26.1"
+java = "zulu-25"
+mongosh = "latest"
+"npm:wrangler" = "latest"
+railway = "latest"
+supabase = "latest"
+
+[settings.upgrade]
