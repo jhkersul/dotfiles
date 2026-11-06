@@ -169,3 +169,7 @@ for tab = 1, 9 do
   local label = tab < 9 and ("Switch to tab " .. tab) or "Switch to last tab"
   o.bind("SUPER + code:" .. tostring(tab + 9), label, send_shortcut_once("CTRL", tostring(tab)))
 end
+
+-- Cmd + Ctrl + Q locks the screen, like macOS. Omarchy's SUPER + CTRL + L
+-- lock is kept as well.
+o.bind("SUPER + CTRL + Q", "Lock system", "omarchy-system-lock")
