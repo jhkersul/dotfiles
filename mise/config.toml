@@ -1,6 +1,7 @@
 [tools]
 antigravity-cli = { version = "latest", minimum_release_age = "0s", lazy = true, auto_update = "4h" }
-gcloud = "latest"
+# Each gcloud upgrade is a fresh SDK, so reinstall the GKE auth plugin kubectl calls.
+gcloud = { version = "latest", postinstall = '"$MISE_TOOL_INSTALL_PATH/bin/gcloud" components install gke-gcloud-auth-plugin --quiet' }
 "github:cloudflare/cloudflare-go" = "latest"
 "github:confluentinc/cli" = "latest"
 "github:mongodb/mongodb-atlas-cli" = "latest"

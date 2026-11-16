@@ -308,21 +308,44 @@ carry them under the expected name:
 - `github:cloudflare/cloudflare-go` gives `flarectl`.
 
 `gcloud` keeps `gke-gcloud-auth-plugin` and `docker-credential-gcloud` in its own
-`bin`, and `~/.kube/config` and `~/.docker/config.json` call them by name. If
-kubectl can't find the plugin after a gcloud upgrade, run
-`gcloud components install gke-gcloud-auth-plugin`.
+`bin`, and `~/.kube/config` and `~/.docker/config.json` call them by name. Each
+gcloud upgrade is a fresh SDK without components, so the `gcloud` entry has a
+`postinstall` hook that reinstalls `gke-gcloud-auth-plugin` into the new
+version.
 
 Linear runs as an Omarchy web app
 (`omarchy-webapp-install Linear https://linear.app ""`) instead of the
 `linear-bin` desktop client.
 
-These stay on the AUR, since they run as root or at boot:
+Only `coolercontrol-bin` and `coolercontrold-bin`, the fan-control daemon, stay
+on the AUR: they run as root, aren't in the Arch or Omarchy repos, and mise
+doesn't manage system services.
 
-- `coolercontrol-bin` and `coolercontrold-bin`, the fan-control daemon.
-- `mkinitcpio-clevis-hook`, which unlocks LUKS through the TPM at boot. It is
-  added by hand to the `HOOKS` line in
-  `/etc/mkinitcpio.conf.d/omarchy_hooks.conf`. Don't accept that file's
-  `.pacnew` as-is, or TPM unlock stops.
+### TPM unlock at boot: clevis
+
+The LUKS root unlocks through the TPM with
+[clevis](https://github.com/latchset/clevis) (from `extra`) and a mkinitcpio
+hook that used to come from the AUR's `mkinitcpio-clevis-hook`. The hook is now
+plain local config instead of a package:
+
+| File | Copy to (root) |
+| --- | --- |
+| `initcpio/hooks/clevis` | `/etc/initcpio/hooks/clevis` |
+| `initcpio/install/clevis` | `/etc/initcpio/install/clevis` |
+| `initcpio/zz-clevis.conf` | `/etc/mkinitcpio.conf.d/zz-clevis.conf` |
+
+The two `clevis` scripts are copied unchanged from
+[kishorv06/arch-mkinitcpio-clevis-hook](https://github.com/kishorv06/arch-mkinitcpio-clevis-hook)
+(GPL-3.0). Their runtime needs `clevis`, `tpm2-tools`, `luksmeta`, `tpm2-abrmd`
+and `libpwquality`, all from the official repos and marked explicitly installed
+so orphan cleanup keeps them.
+
+`zz-clevis.conf` sorts after Omarchy's drop-ins and inserts `clevis` right
+before `encrypt` in whatever `HOOKS` they set, so Omarchy's own
+`omarchy_hooks.conf` stays untouched and takes its updates. Rebuild the boot
+images with `sudo limine-mkinitcpio` and check that the build log shows
+`Running build hook: [clevis]`. If the TPM unlock fails, the LUKS password
+prompt still works.
 
 ## Finicky (macOS)
 
